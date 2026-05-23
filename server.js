@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
@@ -12,32 +10,25 @@ app.use(express.json());
 // 📦 codes storage
 let codes = {};
 
-// 📁 FRONTEND (login page)
+// 📁 HOME
 app.get("/", (req, res) => {
-    res.send(`
-    <h2>Login System API is running 🚀</h2>
-    <p>Use /send-code and /verify-code</p>
-    `);
+    res.send("Login API running 🚀");
 });
 
-// 📧 EMAIL TRANSPORT (FIXED SMTP)
+// 📧 EMAIL (DIRECT - no env)
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: "redzepzenjili26@gmail.com",
+        pass: "tlfnfciszphkpvvb"
     }
 });
 
 // 🔐 SEND CODE
 app.post("/send-code", async (req, res) => {
     const { email, username } = req.body;
-
-    if (!email) {
-        return res.json({ success: false, message: "Email missing" });
-    }
 
     const code = Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -49,10 +40,10 @@ app.post("/send-code", async (req, res) => {
 
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+            from: "GameHub",
             to: email,
             subject: "Your Login Code",
-            text: `Your login code is: ${code}`
+            text: `Your code is: ${code}`
         });
 
         console.log("Email sent to:", email);
@@ -72,23 +63,21 @@ app.post("/verify-code", (req, res) => {
         return res.json({ success: false, message: "No code found" });
     }
 
-    const data = codes[email];
-
-    if (Date.now() > data.expires) {
-        return res.json({ success: false, message: "Code expired" });
+    if (Date.now() > codes[email].expires) {
+        return res.json({ success: false, message: "Expired" });
     }
 
-    if (code === data.code) {
+    if (code === codes[email].code) {
         return res.json({
             success: true,
-            username: data.username
+            username: codes[email].username
         });
     }
 
     res.json({ success: false, message: "Wrong code" });
 });
 
-// 🟢 PORT (RENDER FIX)
+// 🟢 START SERVER
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
