@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lobby</title>
+</head>
+<body>
+
+<h2 id="welcome"></h2>
+
+<button onclick="startGame('snake')">Snake</button>
+<button onclick="startGame('pong')">Pong</button>
+<button onclick="startGame('tetris')">Tetris</button>
+<button onclick="startGame('xo')">XO</button>
+<button onclick="startGame('simon')">Simon</button>
+<button onclick="startGame('minesweeper')">Minesweeper</button>
+<button onclick="startGame('bounce')">Bounce</button>
+<button onclick="startGame('sudoku')">Sudoku</button>
+<button onclick="startGame('2048')">2048</button>
+<button onclick="startGame('chess')">Chess</button>
+<button onclick="startGame('doodle')">Doodle Jump</button>
+<button onclick="startGame('solitaire')">Solitaire</button>
+<button onclick="startGame('flappy')">Flappy Bird</button>
+<button onclick="startGame('hangman')">Hangman</button>
+<button onclick="startGame('memory')">Memory</button>
+<button onclick="startGame('connect')">Connect Four</button>
+<button onclick="startGame('insect')">Insect Catcher</button>
+<button onclick="startGame('typer')">Typer</button>
+<button onclick="startGame('slicer')">Fruit Slicer</button>
+<button onclick="startGame('puzzle')">Sliding Puzzle</button>
+<button onclick="startGame('candy')">Candy Crush</button>
+
+
+
+<script>
+document.getElementById("welcome").innerText =
+    "Welcome " + localStorage.getItem("username");
+
+function startGame(game) {
+    if (game === 'snake') {
+        window.location.href = "game.html";  // отвора Snake
+    } else if (game === 'pong') {
+        window.location.href = "game1.html"; // отвора Pong
+    } else if (game === 'tetris') {
+        window.location.href = "game2.html"; // отвора Tetris
+    } else if (game === 'xo') {
+        window.location.href = "game3.html"; // отвора XO
+    } else if (game === 'simon') {
+        window.location.href = "game4.html"; // отвора Simon
+    } else if (game === 'minesweeper') {
+        window.location.href = "game5.html"; // отвора Minesweeper
+    } else if (game === 'bounce') {
+        window.location.href = "game6.html"; // отвора Bounce
+    } else if (game === 'sudoku') {
+        window.location.href = "game7.html"; // отвора Sudoku
+    } else if (game === '2048') {
+        window.location.href = "game8.html"; // отвора 2048
+    } else if (game === 'chess') {
+        window.location.href = "game9.html"; // отвора Chess
+    } else if (game === 'doodle') {
+        window.location.href = "game10.html"; // отвора Doodle Jump
+    } else if (game === 'solitaire') {
+        window.location.href = "game11.html"; // отвора Solitaire
+    } else if (game === 'flappy') {
+        window.location.href = "game12.html"; // отвора Flappy Bird
+    } else if (game === 'hangman') {
+        window.location.href = "game13.html"; // отвора Hangman
+    } else if (game === 'memory') {
+        window.location.href = "game14.html"; // отвора Memory
+    } else if (game === 'connect') {
+       window.location.href = "game15.html"; // отвора Connect Four
+    }  else if (game === 'insect') {
+        window.location.href = "game16.html"; // отвора Insect Catcher
+    }   else if (game === 'typer') {
+        window.location.href = "game17.html"; // отвора Typer
+    }   else if (game === 'slicer') {
+        window.location.href = "game18.html"; // отвора Fruit Slicer
+    }   else if (game === 'puzzle') {
+        window.location.href = "game19.html"; // отвора Sliding Puzzle }
+    } else if (game === 'candy') {
+        window.location.href = "game20.html"; // отвора Candy Crush
+    }
+
+
+
+
+
+
+
+
+
+
+}
+
+</script>
+<link rel="stylesheet" href="lobby.css">
+</body>
+</html>
