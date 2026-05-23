@@ -7,10 +7,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ✔️ HOME PAGE (FIX for Cannot GET /)
+app.get("/", (req, res) => {
+    res.send("Server is working 🚀 Login API is running");
+});
+
 // 📦 codes storage
 let codes = {};
 
-// 📧 EMAIL TRANSPORT (DIRECT SETUP)
+// 📧 EMAIL TRANSPORT
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -23,16 +28,12 @@ const transporter = nodemailer.createTransport({
 app.post("/send-code", async (req, res) => {
     const { email, username } = req.body;
 
-    if (!email) {
-        return res.json({ success: false, message: "Email is required" });
-    }
-
     const code = Math.floor(100000 + Math.random() * 900000).toString();
 
     codes[email] = {
         code,
         username,
-        expires: Date.now() + 2 * 60 * 1000 // 2 min
+        expires: Date.now() + 2 * 60 * 1000
     };
 
     try {
@@ -43,7 +44,7 @@ app.post("/send-code", async (req, res) => {
             text: `Your login code is: ${code}`
         });
 
-        res.json({ success: true, message: "Code sent" });
+        res.json({ success: true });
     } catch (err) {
         res.json({ success: false, error: err.message });
     }
@@ -64,17 +65,16 @@ app.post("/verify-code", (req, res) => {
     }
 
     if (code === data.code) {
-        return res.json({
+        res.json({
             success: true,
-            message: "Login successful",
             username: data.username
         });
     } else {
-        return res.json({ success: false, message: "Wrong code" });
+        res.json({ success: false, message: "Wrong code" });
     }
 });
 
-// 🟢 START SERVER
+// 🟢 START SERVER (Render fix)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
