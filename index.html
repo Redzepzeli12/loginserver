@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="index.css">
     <title>Login</title>
 </head>
 <body>
 
 <h2>Login</h2>
 
-<input type="text" id="username" placeholder="Username"><br><br>
-<input type="email" id="email" placeholder="Email"><br><br>
-
+<input id="email" placeholder="Email">
+<input id="username" placeholder="Username">
 <button onclick="sendCode()">Send Code</button>
 
-<script src="login.js"></script>
+<br><br>
+
+<input id="code" placeholder="Code">
+<button onclick="verifyCode()">Verify</button>
+
+<script>
+async function sendCode() {
+    const email = document.getElementById("email").value;
+    const username = document.getElementById("username").value;
+
+    await fetch("/send-code", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ email, username })
+    });
+
+    alert("Code sent");
+}
+
+async function verifyCode() {
+    const email = document.getElementById("email").value;
+    const code = document.getElementById("code").value;
+
+    const res = await fetch("/verify-code", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ email, code })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Login OK: " + data.username);
+    } else {
+        alert(data.message);
+    }
+}
+</script>
 
 </body>
 </html>
